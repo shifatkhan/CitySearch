@@ -1,0 +1,130 @@
+/* 
+    Created on : Nov 10, 2016, 12:01:25 PM
+    Author     : Shifat Khan
+*/
+body {
+    margin:0;
+    padding:0;
+    background-image: url("bg.jpg");
+    background-size: cover;
+    background-color: #cccccc;
+}
+
+.header {
+    width: 100%;
+    height: auto;
+    background-image: url("headerbg.jpg");
+    background-color: #eef3f5;
+    padding-top: 24px;
+}
+.headerContent {
+    width: 1024px;
+    height: auto;
+    margin: 0 auto;
+}
+.headerContent a img {
+    width: 40%;
+    height: auto;
+    margin: 0px auto;
+    display: block;
+}
+.nav {
+    margin-top: 20px;
+    height: 40px;
+    background: #62646d;
+}
+.nav ul {
+    margin: 0;
+    padding: 0;
+}
+.nav ul li {
+    list-style: none;
+}
+.nav ul li a {
+    text-decoration: none;
+    float: left;
+    display: block;
+    padding: 10px 20px;
+    color: white;
+}
+.nav ul li a:hover {
+    color: black;
+}
+.headerBreak {
+    width: 100%;
+    height: 0;
+    border-bottom: 2px solid #a7e0ee;
+}
+#title{
+    text-align: center;
+    font-family: "Lucida Console";
+}
+
+#loginWrapper{ 
+    margin: auto;
+    border:3px solid #000000;
+    padding:9px 35px;
+    background:#62646d;;
+    width:400px;
+    border-radius:20px;
+    box-shadow: 7px 7px 6px;
+} 
+
+#button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius:10px;
+    width:100px;
+    height:30px;
+    background:#62646d;;
+    color: white;
+    font-size:20px;
+}
+
+
+#formWrapper{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+form{
+    border: 3px solid black;
+    text-align: center;
+}
+
+.tableResult{
+    margin: 50px auto;
+    width: 70%;
+    align: center;
+}
+
+.results{
+    margin: auto;
+    border-collapse: collapse;
+    border: 2px solid #696969;
+    text-align: center;
+    background-color: #FAF6F5;
+}
+
+.error{
+    margin: 0;
+    text-align: center;
+}
+
+td, th{
+    padding: 3px;
+    border: 1px solid #696969;
+}
+
+#footerWrapper{
+    width: 100%;
+    height: auto;
+    background-color: rgb(255,255,255, 0.3);
+}
+
+footer{
+    text-align: center;
+    margin-top: 50px;
+    
+}
