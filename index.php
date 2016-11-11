@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+This web page will be taking care of displaying the login form
+
+@author Shifat Khan
+-->
+
 <?php
 session_start();
 if (isset($_SESSION['username'])) {
@@ -12,7 +18,7 @@ if (isset($_SESSION['username'])) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>City search engine</title>
+        <title>City Search - Log in</title>
         <link rel="stylesheet" type="text/css" href="myCss.css"/>
     </head>
     <body>
@@ -29,16 +35,26 @@ if (isset($_SESSION['username'])) {
                 <input type="password" name="password" />
                 <br>
 
-                <input id="button" type="submit" name="login" value="Login"/>
+                <input class="button" type="submit" name="login" value="Login"/>
+                <input class="button" type="submit" name="register" value="Sign up"/>
             </form>
             <?php
             if (isset($_GET['login'])) {
                 if ($_GET['login'] == 1) {
-                    echo "<p class=\"error\" style=\"color: white\">"
+                    echo "<p class=\"alert\" style=\"color: white\">"
                     . "Wrong username or password</p>";
                 } else if ($_GET['login'] == 2) {
-                    echo "<p class=\"error\" style=\"color: white\">"
+                    echo "<p class=\"alert\" style=\"color: white\">"
                     . "Please fill out the form</p>";
+                } else if ($_GET['login'] == 3) {
+                    echo "<p class=\"alert\" style=\"color: white\">"
+                    . "Account created. You can now log in</p>";
+                }
+            }
+            if (isset($_GET['register'])) {
+                if ($_GET['register'] == 3) {
+                    echo "<p class=\"alert\" style=\"color: white\">"
+                    . "Account successfully created. You can log in now.</p>";
                 }
             }
             ?>

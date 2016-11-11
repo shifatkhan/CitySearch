@@ -70,7 +70,7 @@ body {
     box-shadow: 7px 7px 6px;
 } 
 
-#button{
+.button{
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius:10px;
@@ -107,7 +107,7 @@ form{
     background-color: #FAF6F5;
 }
 
-.error{
+.alert{
     margin: 0;
     text-align: center;
 }

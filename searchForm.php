@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+This web page will be taking care of displaying the search form.
+
+@author Shifat Khan
+-->
+
 <?php
 session_start();
 if (!$_SESSION['username']) {
@@ -10,7 +16,7 @@ if (!$_SESSION['username']) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>City search engine</title>
+        <title>City Search</title>
         <link rel="stylesheet" type="text/css" href="myCss.css"/>
     </head>
     <body>
@@ -23,9 +29,9 @@ if (!$_SESSION['username']) {
             <div class="nav">
                 <ul>
                     <li><a href="#"><?php
-                        $user = $_SESSION['username'];
-                        echo "Logged in as: $user";
-                        ?></a></li>
+                            $user = $_SESSION['username'];
+                            echo "Logged in as: $user";
+                            ?></a></li>
                     <li><a href="logout.php">Logout</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact Us</a></li>
@@ -40,18 +46,19 @@ if (!$_SESSION['username']) {
                 <input type="submit" name="search" value="Search"/>
             </form>
         </div>
-<?php
+        <?php
+// REMOVE/CHANGE THIS - NOT PART OF PROJECT
 //Check if there's something in the field
-if (isset($_GET['search'])) {
-    if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
-        
-    } else {
-        echo "<div class='tableResult'>";
-        echo "<p class='error'>Enter a keyword</p>";
-        echo "</div>";
-    }
-}
-?>
+        if (isset($_GET['search'])) {
+            if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
+                
+            } else {
+                echo "<div class='tableResult'>";
+                echo "<p class='error'>Enter a keyword</p>";
+                echo "</div>";
+            }
+        }
+        ?>
         <footer>Shifat Khan &copy; Dawson College, 2016</footer>
     </body>
 </html>

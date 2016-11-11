@@ -1,9 +1,22 @@
 <?php
+/**
+ * This php script will be validation and authenticating the username and 
+ * password. If the user has sucessfully logged in, it will start a session and 
+ * redirect them to the web app.
+ * 
+ * @author Shifat Khan
+ */
 
 if (isset($_POST['login'])) {
     signin();
+} else if(isset($_POST['register'])){
+    header("Location: registerationForm.php");
+    exit;
 }
 
+/**
+ * Authenticate the user and start a session. Redirect if successful
+ */
 function signin() {
     session_start();
 
@@ -12,6 +25,7 @@ function signin() {
         try {
             // Search if user exists in the db
             $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = 'SELECT * FROM users WHERE username = ? AND password = ?;';
             $stmt = $pdo->prepare($query);
 
@@ -22,24 +36,30 @@ function signin() {
             // Check if there's a row and if the user was found
             if ($row = $stmt->fetch()) {
                 if (!empty($row['username']) AND ! empty($row['password'])) {
+                    // Create session id for the user logged in
                     $_SESSION['username'] = $row['username'];
                     header("location:searchForm.php");
                     exit;
                 } else {
+                    // Return value indicating user inputed wrong username or password
                     header("location:index.php?login=1");
                     exit;
                 }
             } else {
+                // Return value indicating user doesn't exist
                 header("location:index.php?login=1");
                 exit;
             }
         } catch (PDOException $pdoe) {
-            echo $pdoe->getMessage();
-        } finally {
+            echo "<h1>Something went wrong. Please try again later</h1>";
+        } catch (Exception $e) {
+            echo "<h1>Something went wrong. Please try again later</h1>";
+        }finally {
             unset($pdo);
         }
     }
     else{
+        // Return value indicating user didn't fill out the form
         header("location:index.php?login=2");
         exit;
     }

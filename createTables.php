@@ -5,13 +5,16 @@ addDefaultsToUsersTable();
 createCitiesTable();
 addDataToCitiesTable();
 
+/**
+ * Creates the users table in the homestead database
+ */
 function createUsersTable() {
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
         $dropQuery = "DROP TABLE IF EXISTS users;";
         $tableQuery = "CREATE TABLE users("
                 . 'userid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
-                . 'username VARCHAR(255) NOT NULL,'
+                . 'username VARCHAR(255) NOT NULL UNIQUE,'
                 . 'password VARCHAR(40) NOT NULL'
                 . ');';
         $pdo->exec($dropQuery);
@@ -26,6 +29,9 @@ function createUsersTable() {
     }
 }
 
+/**
+ * Adds the the default users in the users table
+ */
 function addDefaultsToUsersTable() {
     try {
         //Add data to database
@@ -37,7 +43,9 @@ function addDefaultsToUsersTable() {
         $stmt->bindValue(1, "shifatkhan");
         $stmt->bindValue(2, "Shifat66");
         $stmt->execute();
-        echo "Added shifatkhan\t(1/1)\n";
+        
+        // For debugging purposes
+        echo "(1/1)\t Added shifatkhan\n";
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
     } finally {
@@ -45,6 +53,9 @@ function addDefaultsToUsersTable() {
     }
 }
 
+/**
+ * Creates the cities table in the homestead database
+ */
 function createCitiesTable() {
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
@@ -67,6 +78,9 @@ function createCitiesTable() {
     }
 }
 
+/**
+ * Adds all the cities data from cities.txt in the cities table
+ */
 function addDataToCitiesTable() {
     $countries = file('cities.txt');
     $size = count($countries);
@@ -77,15 +91,19 @@ function addDataToCitiesTable() {
         $query = 'INSERT INTO cities (city, country, population) '
                 . 'VALUES (?, ?, ?);';
 
+        // Algorithm to get each field of a city from the cities.txt
         for ($i = 0; $i < $size; $i++) {
+            // Seperate population from the rest
             $row1 = explode(";", $countries[$i]);
             $population = $row1[0];
             $population = trim($population);
 
+            // Excluding the population, make an array
             $row2 = explode(",", $row1[1]);
             $city = $row2[0];
             $city = trim($city);
             
+            // Remove the city field and make a string for the country
             array_shift($row2);
             $country = implode(",", $row2);
             $country = trim($country);
@@ -96,7 +114,8 @@ function addDataToCitiesTable() {
             $stmt->bindParam(3, $population);
             $stmt->execute();
             
-            echo "Added city\t(".($i+1)."/$size)\n";
+            // For debugging purposes
+            echo "(".($i+1)."/$size)\t Added city: $city\n";
         }
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
@@ -105,6 +124,13 @@ function addDataToCitiesTable() {
     }
 }
 
+/**
+ * Checks if the table was created or not and displays accordingly
+ * (for debugging)
+ * 
+ * @param type $pdo
+ * @param type $tablename
+ */
 function checkTables($pdo, $tablename) {
     // Check if the table was created
     $tableCheck = $pdo->query("SELECT * FROM $tablename");
@@ -114,5 +140,4 @@ function checkTables($pdo, $tablename) {
         echo "ERROR: Table '$tablename' not created\n";
     }
 }
-
 ?>
