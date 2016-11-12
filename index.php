@@ -9,7 +9,7 @@ This web page will be taking care of displaying the login form
 session_start();
 if (isset($_SESSION['username'])) {
     if ($_SESSION['username']) {
-        //redirect to login page to secure search form page without login access.  
+        //redirect to search form page to secure login page. 
         header("Location: searchForm.php");
         exit;
     }
@@ -52,8 +52,8 @@ if (isset($_SESSION['username'])) {
                 }
             }
             if (isset($_GET['register'])) {
-                if ($_GET['register'] == 3) {
-                    echo "<p class=\"alert\" style=\"color: white\">"
+                if ($_GET['register'] == 4) {
+                    echo "<p class=\"alert\" style=\"color: LawnGreen\">"
                     . "Account successfully created. You can log in now.</p>";
                 }
             }

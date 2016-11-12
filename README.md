@@ -7,3 +7,6 @@ Create an account and login before using the browser app.
 Here, you can search your favorite cities around the world! Cities are sorted by 
 by their population in descending order. This project makes use of auto-filling 
 the search bar. Try it out!
+
+TO-DO:
+- Use AJAX for the login and register page instead of header redirections.

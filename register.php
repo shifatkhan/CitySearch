@@ -7,6 +7,7 @@
  * 
  * @author Shifat Khan
  */
+define("MYSQL_CODE_DUPLICATE_KEY", 1062);
 register();
 
 /**
@@ -21,19 +22,30 @@ function register() {
                 // Store user into database
                 $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $query = 'INSERT INTO users(username, password) VALUES(?, ?);';
+                $query = 'INSERT INTO users(username, hashpass) VALUES(?, ?);';
                 $stmt = $pdo->prepare($query);
 
                 $stmt->bindParam(1, $_POST['user']);
-                $stmt->bindParam(2, $_POST['password']);
+                
+                $options = [
+                    'cost' => 10,
+                ];
+                $passwordFromPost = $_POST['password'];
+                $hash = password_hash($passwordFromPost, PASSWORD_BCRYPT, $options);
+                $stmt->bindParam(2, $hash);
+
                 $stmt->execute();
 
                 // Return value indicating user was created
-                header("location:index.php?register=3");
+                header("location:index.php?register=4");
             } catch (PDOException $pdoe) {
-                echo "<h1>Something went wrong. Please try again.</h1>";
-            } catch (Exception $e) {
-                echo "<h1>Something went wrong. Please try again.</h1>";
+                if ($pdoe->errorInfo[1] == MYSQL_CODE_DUPLICATE_KEY) {
+                    // Return value indicating username already taken
+                    header("location:registerationForm.php?register=3");
+                    exit;
+                } else {
+                    echo "<h1>Something went wrong. Please try again later</h1>";
+                }
             } finally {
                 unset($pdo);
             }

@@ -2,8 +2,8 @@
 
 createUsersTable();
 addDefaultsToUsersTable();
-createCitiesTable();
-addDataToCitiesTable();
+//createCitiesTable();
+//addDataToCitiesTable();
 
 /**
  * Creates the users table in the homestead database
@@ -14,8 +14,11 @@ function createUsersTable() {
         $dropQuery = "DROP TABLE IF EXISTS users;";
         $tableQuery = "CREATE TABLE users("
                 . 'userid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
-                . 'username VARCHAR(255) NOT NULL UNIQUE,'
-                . 'password VARCHAR(40) NOT NULL'
+                . 'username VARCHAR(10) NOT NULL UNIQUE,'
+                . 'hashpass VARCHAR(255) NOT NULL,'
+                . 'attempt INT,'
+                . 'lastlogin DATETIME,'
+                . 'lastipaddress VARCHAR(255)'
                 . ');';
         $pdo->exec($dropQuery);
         $pdo->exec($tableQuery);
@@ -36,16 +39,22 @@ function addDefaultsToUsersTable() {
     try {
         //Add data to database
         $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
-        $query = 'INSERT INTO users (username, password) '
+        $query = 'INSERT INTO users (username, hashpass) '
                 . 'VALUES (?, ?);';
         $stmt = $pdo->prepare($query);
 
-        $stmt->bindValue(1, "shifatkhan");
-        $stmt->bindValue(2, "Shifat66");
+        $options = [
+            'cost' => 10,
+        ];
+        $passwordFromPost = 'Shifat66';
+        $hash = password_hash($passwordFromPost, PASSWORD_BCRYPT, $options);
+
+        $stmt->bindValue(1, "Shifat");
+        $stmt->bindParam(2, $hash);
         $stmt->execute();
-        
+
         // For debugging purposes
-        echo "(1/1)\t Added shifatkhan\n";
+        echo "(1/1)\t Added Shifat\n";
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
     } finally {
@@ -102,20 +111,20 @@ function addDataToCitiesTable() {
             $row2 = explode(",", $row1[1]);
             $city = $row2[0];
             $city = trim($city);
-            
+
             // Remove the city field and make a string for the country
             array_shift($row2);
             $country = implode(",", $row2);
             $country = trim($country);
-            
+
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(1, $city);
             $stmt->bindParam(2, $country);
             $stmt->bindParam(3, $population);
             $stmt->execute();
-            
+
             // For debugging purposes
-            echo "(".($i+1)."/$size)\t Added city: $city\n";
+            echo "(" . ($i + 1) . "/$size)\t Added city: $city\n";
         }
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
@@ -140,4 +149,5 @@ function checkTables($pdo, $tablename) {
         echo "ERROR: Table '$tablename' not created\n";
     }
 }
+
 ?>

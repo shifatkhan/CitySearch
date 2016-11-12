@@ -38,9 +38,13 @@ create the user's account.
                     echo "<p class=\"alert\" style=\"color: white\">"
                     . "Please fill out the form.</p>";
                 }
-                if ($_GET['register'] == 2) {
+                else if ($_GET['register'] == 2) {
                     echo "<p class=\"alert\" style=\"color: white\">"
                     . "Passwords don't match.</p>";
+                }
+                else if ($_GET['register'] == 3) {
+                    echo "<p class=\"alert\" style=\"color: white\">"
+                    . "Username already taken.</p>";
                 }
             }
             ?>
