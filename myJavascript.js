@@ -24,10 +24,14 @@ $(document).ready(function () {
 
                         // Parse the data to JSON
                         var results = jQuery.parseJSON(data);
-
+                        
+                        var count = 0;
+                        
                         // Create the item list displaying each city
                         $(results).each(function (key, value) {
-                            $('#results').append('<div class="item">' + value + '</div>');
+                            count++;
+                            if(count <= 5)
+                                $('#results').append('<div class="item">' + value + '</div>');
                         })
 
                         // Make the list clickable. When clicked, put the keyword in the textbox.
@@ -51,6 +55,10 @@ $(document).ready(function () {
             $('#results').html('');
         }
     });
+
+    $("#keyword").blur(function () {
+        $(".alert").fadeOut(500);
+    })
 
     // Make it so the list fades away when not in focus and appear when it is
     $("#keyword").blur(function () {

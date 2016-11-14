@@ -12,7 +12,14 @@ if (!isset($_GET['keyword'])) {
 }
 
 $keyword = $_GET['keyword'];
-$data = autocompleteKeyword($keyword);
+
+if(countHistory() > 0){
+    $data = searchHistoryKeywords();
+    array_push($data, autocompleteKeyword($keyword));
+}else{
+    // TODO
+}
+
 // To facilitate the output, we return the array as json_encode
 echo json_encode($data, JSON_HEX_APOS);
 
@@ -41,4 +48,57 @@ function autocompleteKeyword($keyword) {
     }
     
     return $results;
+}
+
+/**
+ * Returns the search terms from the user's history table
+ */
+function searchHistoryKeywords(){
+    $results = array();
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $tableQuery = "SELECT keyword FROM history WHERE username = ? "
+                . "ORDER BY datesearched DESC "
+                . "LIMIT 5;";
+        
+        $stmt = $pdo->prepare($tableQuery);
+        
+        $stmt->bindValue(1, $_SESSION['username']);
+        
+        if($stmt->execute()){
+            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+    } catch (PDOException $pdoe) {
+        echo $pdoe->getMessage();
+    } finally {
+        unset($pdo);
+    }
+    
+    return $results;
+}
+
+/**
+ * Counts how many search terms there is
+ */
+function countHistory(){
+    $results = array();
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $tableQuery = "SELECT COUNT(*) from history WHERE username = ? ;";
+        $stmt = $pdo->prepare($tableQuery);
+        
+        $stmt->bindValue(1, $_SESSION['username']);
+        
+        if ($row = $stmt->fetch()) {
+            return $row[0];
+        }else {
+            return 0;
+        }
+    } catch (PDOException $pdoe) {
+        echo $pdoe->getMessage();
+    } finally {
+        unset($pdo);
+    }
+    
+    return 0;
 }
