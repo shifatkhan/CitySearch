@@ -2,8 +2,8 @@
 
 createUsersTable();
 addDefaultsToUsersTable();
-//createCitiesTable();
-//addDataToCitiesTable();
+createCitiesTable();
+addDataToCitiesTable();
 createLoginAttemptsTable();
 
 /**

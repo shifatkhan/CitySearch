@@ -24,7 +24,7 @@ function autocompleteKeyword($keyword) {
     $results = array();
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
-        $tableQuery = "SELECT city FROM cities WHERE city LIKE ?;";
+        $tableQuery = "SELECT city FROM cities WHERE city LIKE ? LIMIT 5;";
         
         $stmt = $pdo->prepare($tableQuery);
         
