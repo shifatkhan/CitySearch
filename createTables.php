@@ -4,6 +4,7 @@ createUsersTable();
 addDefaultsToUsersTable();
 //createCitiesTable();
 //addDataToCitiesTable();
+createLoginAttemptsTable();
 
 /**
  * Creates the users table in the homestead database
@@ -134,8 +135,33 @@ function addDataToCitiesTable() {
 }
 
 /**
+ * Creates the loginAttempts table to count how many times someone failed to 
+ * login. This helps against bruteforces.
+ */
+function createLoginAttemptsTable() {
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $dropQuery = "DROP TABLE IF EXISTS loginAttempts;";
+        $tableQuery = "CREATE TABLE loginAttempts("
+                . 'id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
+                . 'lastlogin DATETIME,'
+                . 'lastipaddress VARCHAR(255)'
+                . ');';
+        $pdo->exec($dropQuery);
+        $pdo->exec($tableQuery);
+
+        //Check if table has been created
+        checkTables($pdo, 'loginAttempts');
+    } catch (PDOException $pdoe) {
+        echo $pdoe->getMessage();
+    } finally {
+        unset($pdo);
+    }
+}
+
+/**
  * Checks if the table was created or not and displays accordingly
- * (for debugging)
+ * (for debugging purposes)
  * 
  * @param type $pdo
  * @param type $tablename

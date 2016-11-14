@@ -13,7 +13,7 @@ create the user's account.
     </head>
     <body>
         <h1 id="title">Register</h1>
-        <div id="loginWrapper">
+        <div id="formWrapper">
             <form action="register.php" method="post">
                 <br>
                 <label style="color: white">User: </label>

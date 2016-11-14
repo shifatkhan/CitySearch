@@ -23,7 +23,7 @@ if (isset($_SESSION['username'])) {
     </head>
     <body>
         <h1 id="title">Log in</h1>
-        <div id="loginWrapper">
+        <div id="formWrapper">
             <form action="authentication.php" method="post">
                 <br>
                 <label style="color: white">User: </label>
@@ -47,8 +47,8 @@ if (isset($_SESSION['username'])) {
                     echo "<p class=\"alert\" style=\"color: white\">"
                     . "Please fill out the form</p>";
                 } else if ($_GET['login'] == 3) {
-                    echo "<p class=\"alert\" style=\"color: white\">"
-                    . "Account created. You can now log in</p>";
+                    echo "<p class=\"alert\" style=\"color: LightCoral\">"
+                    . "Too many login attempts. Please try again later.</p>";
                 }
             }
             if (isset($_GET['register'])) {

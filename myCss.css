@@ -14,6 +14,7 @@ body {
     width: 100%;
     height: auto;
     background-image: url("headerbg.jpg");
+    background-size: cover;
     background-color: #eef3f5;
     padding-top: 24px;
 }
@@ -60,7 +61,7 @@ body {
     font-family: "Lucida Console";
 }
 
-#loginWrapper{ 
+#formWrapper{ 
     margin: auto;
     border:3px solid #000000;
     padding:9px 35px;
@@ -81,18 +82,12 @@ body {
     font-size:20px;
 }
 
-
-#formWrapper{
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
-}
-
 form{
     border: 3px solid black;
     text-align: center;
 }
 
+/*
 .tableResult{
     margin: 50px auto;
     width: 70%;
@@ -107,14 +102,36 @@ form{
     background-color: #FAF6F5;
 }
 
-.alert{
-    margin: 0;
-    text-align: center;
-}
-
 td, th{
     padding: 3px;
     border: 1px solid #696969;
+}*/
+
+#results {
+  display: none;
+	width: 204px;
+	border: 1px solid #c0c0c0;
+        text-align: center;
+}
+
+#results .item {
+	padding: 3px;
+	font-family: Helvetica;
+	border-bottom: 1px solid #c0c0c0;
+}
+
+#results .item:last-child {
+	border-bottom: 0px;
+}
+
+#results .item:hover {
+	background-color: #f2f2f2;
+	cursor: pointer;
+}
+
+.alert{
+    margin: 0;
+    text-align: center;
 }
 
 #footerWrapper{

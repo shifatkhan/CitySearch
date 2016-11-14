@@ -18,6 +18,9 @@ if (!$_SESSION['username']) {
         <meta charset="UTF-8">
         <title>City Search</title>
         <link rel="stylesheet" type="text/css" href="myCss.css"/>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="myJavascript.js"></script>
     </head>
     <body>
         <div class="header">
@@ -39,26 +42,28 @@ if (!$_SESSION['username']) {
             </div>
         </div>
         <div id="formWrapper">
-            <form id="searchForm" action="" method="get">
+            <form id="searchForm" method="get">
                 <label>Keyword:</label>
-                <input type="text" name="keyword" 
-                       value="<?php if (isset($_GET['keyword'])) echo $_GET['keyword']; ?>"/>
+                <input id="keyword" type="text" name="keyword" placeholder="Search"
+                       list="datalist"/>
                 <input type="submit" name="search" value="Search"/>
+                <p class="alert" style="color: white"></p>
             </form>
-        </div>
-        <?php
-// REMOVE/CHANGE THIS - NOT PART OF PROJECT
-//Check if there's something in the field
-        if (isset($_GET['search'])) {
-            if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
-                
-            } else {
-                echo "<div class='tableResult'>";
-                echo "<p class='error'>Enter a keyword</p>";
-                echo "</div>";
+            <?php
+            // REMOVE/CHANGE THIS - NOT PART OF PROJECT
+            //Check if there's something in the field
+            if (isset($_GET['search'])) {
+                if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
+                    
+                } else {
+                    echo "<p class=\"alert\" style=\"color: white\">Enter a keyword</p>";
+                }
             }
-        }
-        ?>
+            ?>
+            <div id="results"></div>
+        </div>
+
+
         <footer>Shifat Khan &copy; Dawson College, 2016</footer>
     </body>
 </html>

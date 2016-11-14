@@ -4,6 +4,7 @@
  * This php script will be validating data from the registeration form. If 
  * everything is ok, it will add the user to the database and return value 
  * accordingly.
+ * TODO: Use ajax instead
  * 
  * @author Shifat Khan
  */
