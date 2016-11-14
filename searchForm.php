@@ -42,12 +42,12 @@ if (!$_SESSION['username']) {
             </div>
         </div>
         <div id="formWrapper">
-            <form id="searchForm">
+            <form id="searchForm" method="POST">
                 <label>Keyword:</label>
                 <input id="keyword" type="text" name="keyword" placeholder="Search"
                        list="datalist"/>
-                <input type="submit" name="search" value="Submit" 
-                       onclick="searchTerm();"/>
+                <input id="submit" type="submit" name="search" value="Submit"/>
+                <input id="delete" type="submit" name="delete" value="Delete history"/>
                 <p class="alert" style="color: white"></p>
             </form>
             <?php

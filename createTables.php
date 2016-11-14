@@ -1,10 +1,11 @@
 <?php
 
-createUsersTable();
-addDefaultsToUsersTable();
-createCitiesTable();
-addDataToCitiesTable();
-createLoginAttemptsTable();
+//createUsersTable();
+//addDefaultsToUsersTable();
+//createCitiesTable();
+//addDataToCitiesTable();
+//createLoginAttemptsTable();
+createHistoryTable();
 
 /**
  * Creates the users table in the homestead database
@@ -152,6 +153,34 @@ function createLoginAttemptsTable() {
 
         //Check if table has been created
         checkTables($pdo, 'loginAttempts');
+    } catch (PDOException $pdoe) {
+        echo $pdoe->getMessage();
+    } finally {
+        unset($pdo);
+    }
+}
+
+/**
+ * Creates the history table that will have data about the past search keywords 
+ * the client searched for.
+ */
+function createHistoryTable() {
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $dropQuery = "DROP TABLE IF EXISTS history;";
+        $tableQuery = "CREATE TABLE history("
+                . 'id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
+                . 'keyword VARCHAR(255) NOT NULL,'
+                . 'datesearched DATETIME NOT NULL,'
+                . 'username VARCHAR(10) NOT NULL,'
+                . 'FOREIGN KEY (username) REFERENCES users(username)'
+                . ' ON DELETE CASCADE'
+                . ');';
+        $pdo->exec($dropQuery);
+        $pdo->exec($tableQuery);
+
+        //Check if table has been created
+        checkTables($pdo, 'history');
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
     } finally {

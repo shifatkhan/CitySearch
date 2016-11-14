@@ -6,6 +6,7 @@
  * @author Shifat Khan
  */
 
+// Check if the keyword textbox was set
 if (!isset($_GET['keyword'])) {
 	die("");
 }

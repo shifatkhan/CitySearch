@@ -21,19 +21,29 @@ $(document).ready(function () {
             $.get("search.php", {keyword: keyword})
                     .done(function (data) {
                         $('#results').html('');
-                        
+
                         // Parse the data to JSON
                         var results = jQuery.parseJSON(data);
-                        
+
                         // Create the item list displaying each city
                         $(results).each(function (key, value) {
                             $('#results').append('<div class="item">' + value + '</div>');
                         })
 
-                        // Make the list clickable. When clicked, put the keyword in the textbox
+                        // Make the list clickable. When clicked, put the keyword in the textbox.
+                        // Also, add the keyword into the search history database
                         $('.item').click(function () {
                             var text = $(this).html();
                             $('#keyword').val(text);
+
+                            var keyword = $("#keyword").val();
+                            // Send keyword to searchHistory.php and get a response
+                            $.post("searchHistory.php", {keyword: keyword})
+                                    .done(function (data) {
+                                        // Display the status
+                                        $("<p class=\"alert\" style=\"color: white\">" + data + "</p>")
+                                                .insertBefore("#results");
+                                    });
                         })
 
                     });
@@ -52,29 +62,39 @@ $(document).ready(function () {
 });
 
 /**
- * This function will be getting the keyword and sending it to a php file that
- * will then put it in the database as a search history.
- * @returns {undefined}
+ * This will run when the user click Submit. It will then store the keyword in
+ * the database as history
  */
-function searchTerm(){
-    var xhr = new XMLHttpRequest();
-    
-    // Variables to be passed to the php file
-    var url = "searchHistory.php";
-    var keyword = $("#keyword").val();
-    var vars = "keyword="+keyword;
-    
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    
-    xhr.onreadystatechange = function(){
-        if(hr.readyState == 4 && hr.status == 200) {
-		    var return_data = hr.responseText;
-			document.getElementById("status").innerHTML = return_data;
-	    }
-    }
-    
-    // Execute the request.
-    xhr.send(vars);
-    $("<p class=\"alert\" style=\"color: white\">Submitting...</p>").insertBefore("#results");
-}
+$(document).ready(function () {
+    $("#submit").click(function () {
+        var keyword = $("#keyword").val();
+        
+        // Send keyword to searchHistory.php and get a response
+        $.post("searchHistory.php", {keyword: keyword})
+                .done(function (data) {
+                    $('#keyword').val(data);
+                    
+                    // Display the status 
+                    $("<p class=\"alert\" style=\"color: white\">" + data + "</p>")
+                            .insertBefore("#results");
+                });
+    });
+});
+
+/**
+ * This will run when the user click Delete History. it will delete all the past
+ * search terms from the database
+ */
+$(document).ready(function () {
+    $("#delete").click(function () {
+        var keyword = $("#keyword").val();
+        // Send keyword to deleteSearchHistory.php and get a response
+        $.post("deleteSearchHistory.php", {keyword: keyword})
+                .done(function (data) {
+                    
+                    // Display the status 
+                    $("<p class=\"alert\" style=\"color: white\">" + data + "</p>")
+                            .insertBefore("#results");
+                });
+    });
+});
