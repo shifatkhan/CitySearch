@@ -51,31 +51,20 @@ if (!$_SESSION['username']) {
                 <p class="alert" style="color: white"></p>
             </form>
             <?php
-            // REMOVE/CHANGE THIS - NOT PART OF PROJECT
             //Check if there's something in the field
             if (isset($_GET['search'])) {
-                if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
-                    
-                } else {
+                if (!isset($_GET['keyword']) && $_GET['keyword'] == '') {
                     echo "<p class=\"alert\" style=\"color: white\">Enter a keyword</p>";
                 }
             }
             ?>
             <div id="results"></div>
         </div>
-        <div id="historyWrapper">
-            <p>Search History</p>
-            <div id="history">
-                <?php
-                    include('searchTerms.php');
-                    
-                    $items = searchHistoryKeywords();
-                    foreach($items as $i){
-                        echo '<div class="hitem">' + $i + '</div>';
-                    }
-                ?>
-            </div>
-        </div>
+        <?php
+        include('searchTerms.php');
+
+        searchHistoryKeywords();
+        ?>
 
 
         <div id="footerWrapper">

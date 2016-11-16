@@ -1,7 +1,7 @@
 <?php
 
-//createUsersTable();
-//addDefaultsToUsersTable();
+createUsersTable();
+addDefaultsToUsersTable();
 //createCitiesTable();
 //addDataToCitiesTable();
 //createLoginAttemptsTable();
@@ -16,7 +16,7 @@ function createUsersTable() {
         $dropQuery = "DROP TABLE IF EXISTS users;";
         $tableQuery = "CREATE TABLE users("
                 . 'userid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
-                . 'username VARCHAR(10) NOT NULL UNIQUE,'
+                . 'username VARCHAR(255) NOT NULL UNIQUE,'
                 . 'hashpass VARCHAR(255) NOT NULL,'
                 . 'attempt INT,'
                 . 'lastlogin DATETIME,'

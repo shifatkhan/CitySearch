@@ -13,6 +13,7 @@ if (!isset($_POST['keyword']) || !isset($_SESSION['username'])) {
 
 $keyword = $_POST['keyword'];
 $user = $_SESSION['username'];
+$keyword = strip_tags($keyword);
 $status = storeKeywordAsHistory($keyword, $user);
 
 // Return the status indicating if it was successful or not

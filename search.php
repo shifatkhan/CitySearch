@@ -14,6 +14,7 @@ if (!isset($_GET['keyword'])) {
 }
 
 $keyword = $_GET['keyword'];
+$keyword = strip_tags($keyword);
 
 $data = autocompleteKeyword($keyword);
 

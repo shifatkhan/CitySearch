@@ -18,30 +18,40 @@ function register() {
     session_start();
     session_regenerate_id();
     
+    $user = $_POST['user'];
+    $user = strip_tags($user);
+    $user = trim($user);
+    
+    $password = $_POST['password'];
+    $password = strip_tags($password);
+    $password = trim($password);
+    
+    $cpassword = $_POST['cpassword'];
+    $cpassword = strip_tags($cpassword);
+    $cpassword = trim($cpassword);
+    
     // Check if the fields aren't empty
-    if (!empty($_POST['user']) AND ! empty($_POST['password'])
-            AND ! empty($_POST['cpassword'])) {
-        if ($_POST['cpassword'] === $_POST['password']) {
+    if (!empty($user) AND ! empty($password) AND ! empty($cpassword)) {
+        if ($cpassword === $password) {
             try {
                 // Store user into database
                 $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $query = 'INSERT INTO users(username, hashpass) VALUES(?, ?);';
                 $stmt = $pdo->prepare($query);
-
-                $stmt->bindParam(1, $_POST['user']);
+                
+                $stmt->bindParam(1, $user);
 
                 $options = [
                     'cost' => 10,
                 ];
-                $passwordFromPost = $_POST['password'];
-                $hash = password_hash($passwordFromPost, PASSWORD_BCRYPT, $options);
+                $hash = password_hash($password, PASSWORD_BCRYPT, $options);
                 $stmt->bindParam(2, $hash);
 
                 $stmt->execute();
 
                 // Create session id for the user logged in
-                $_SESSION['username'] = $_POST['user'];
+                $_SESSION['username'] = $user;
 
                 // Redirect to the search form
                 header("location:searchForm.php");
@@ -51,7 +61,7 @@ function register() {
                     header("location:registerationForm.php?register=3");
                     exit;
                 } else {
-                    echo "<h1>Something went wrong. Please try again later</h1>";
+                    echo "<h1>".$pdoe->getMessage()."Something went wrong. Please try again later</h1>";
                 }
             } finally {
                 unset($pdo);
