@@ -36,7 +36,7 @@ $(document).ready(function () {
                         // Also, add the keyword into the search history database
                         $('.item').click(function () {
                             var text = $(this).html();
-                            $('#keyword').val(text);
+                            $('#keyword').val(text.split(',',1));
 
                             var keyword = $("#keyword").val();
                             // Send keyword to searchHistory.php and get a response
