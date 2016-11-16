@@ -24,14 +24,13 @@ $(document).ready(function () {
                         // Parse the data to JSON
                         var results = jQuery.parseJSON(data);
 
-                        var count = 0;
+                        var max_list = 5;
 
-                        // Create the item list displaying each city
-                        $(results).each(function (key, value) {
-                            count++;
-                            if (count <= 5)
-                                $('#results').append('<div class="item">' + value + '</div>');
-                        });
+                        for(i = 0; i < max_list; i++){
+                            var city = results[i];
+                            $('#results').append('<div class="item">' + city['city']
+                                    + ', ' + city['country'] + '</div>');
+                        }
 
                         // Make the list clickable. When clicked, put the keyword in the textbox.
                         // Also, add the keyword into the search history database

@@ -33,14 +33,14 @@ function autocompleteKeyword($keyword) {
     $results = array();
     try {
         $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
-        $tableQuery = "SELECT city FROM cities WHERE city LIKE ? LIMIT 5;";
-        
-        $stmt = $pdo->prepare($tableQuery);
+        $query = "SELECT city, country FROM cities WHERE city LIKE ? LIMIT 5;";
+        $stmt = $pdo->prepare($query);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'City');
         
         $stmt->bindValue(1, $keyword.'%');
         
         if($stmt->execute()){
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            $results = $stmt->fetchAll();
         }
     } catch (PDOException $pdoe) {
         echo $pdoe->getMessage();
