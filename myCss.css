@@ -115,10 +115,49 @@ form{
     text-align: center;
 }
 
+#historyWrapper{
+    margin: auto;
+    border:3px solid #000000;
+    padding:9px 35px;
+    background:#62646d;;
+    width:400px;
+    border-radius:20px;
+    box-shadow: 7px 7px 6px;
+}
+
+#historyWrapper p{
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#history{
+    display: none;
+    width: 100%;
+    border: 1px solid #c0c0c0;
+    text-align: center;
+}
+
+#history .hitem {
+    padding: 3px;
+    font-family: Helvetica;
+    border-bottom: 1px solid #c0c0c0;
+    text-align: center;
+}
+
+#history .hitem:last-child {
+    border-bottom: 0px;
+}
+
+#history .hitem:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
 #footerWrapper{
     width: 100%;
     height: auto;
-    background-color: rgb(255,255,255, 0.3);
+    background-color: rgba(255,255,255, 0.3);
 }
 
 footer{

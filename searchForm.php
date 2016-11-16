@@ -63,8 +63,23 @@ if (!$_SESSION['username']) {
             ?>
             <div id="results"></div>
         </div>
+        <div id="historyWrapper">
+            <p>Search History</p>
+            <div id="history">
+                <?php
+                    include('searchTerms.php');
+                    
+                    $items = searchHistoryKeywords();
+                    foreach($items as $i){
+                        echo '<div class="hitem">' + $i + '</div>';
+                    }
+                ?>
+            </div>
+        </div>
 
 
-        <footer>Shifat Khan &copy; Dawson College, 2016</footer>
+        <div id="footerWrapper">
+            <footer>Shifat Khan &copy; Dawson College, 2016</footer>
+        </div>
     </body>
 </html>
