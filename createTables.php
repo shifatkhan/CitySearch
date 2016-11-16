@@ -1,10 +1,17 @@
 <?php
+/**
+ * This php file will be creating all the tables needed to run the app.
+ * 
+ * @author Shifat Khan
+ */
+
+include ('databaseConstants.php');
 
 createUsersTable();
 addDefaultsToUsersTable();
-//createCitiesTable();
-//addDataToCitiesTable();
-//createLoginAttemptsTable();
+createCitiesTable();
+addDataToCitiesTable();
+createLoginAttemptsTable();
 createHistoryTable();
 
 /**
@@ -12,7 +19,7 @@ createHistoryTable();
  */
 function createUsersTable() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $dropQuery = "DROP TABLE IF EXISTS users;";
         $tableQuery = "CREATE TABLE users("
                 . 'userid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
@@ -40,7 +47,7 @@ function createUsersTable() {
 function addDefaultsToUsersTable() {
     try {
         //Add data to database
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = 'INSERT INTO users (username, hashpass) '
                 . 'VALUES (?, ?);';
         $stmt = $pdo->prepare($query);
@@ -69,7 +76,7 @@ function addDefaultsToUsersTable() {
  */
 function createCitiesTable() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $dropQuery = "DROP TABLE IF EXISTS cities;";
         $tableQuery = "CREATE TABLE cities("
                 . 'cityid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
@@ -98,7 +105,7 @@ function addDataToCitiesTable() {
 
     try {
         //Add data to database
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = 'INSERT INTO cities (city, country, population) '
                 . 'VALUES (?, ?, ?);';
 
@@ -141,7 +148,7 @@ function addDataToCitiesTable() {
  */
 function createLoginAttemptsTable() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $dropQuery = "DROP TABLE IF EXISTS loginAttempts;";
         $tableQuery = "CREATE TABLE loginAttempts("
                 . 'id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'
@@ -166,7 +173,7 @@ function createLoginAttemptsTable() {
  */
 function createHistoryTable() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $dropQuery = "DROP TABLE IF EXISTS history;";
         $tableQuery = "CREATE TABLE history("
                 . 'id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,'

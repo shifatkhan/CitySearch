@@ -5,6 +5,9 @@
  * 
  * @author Shifat Khan
  */
+
+include ('databaseConstants.php');
+
 session_start();
 session_regenerate_id();
 
@@ -29,7 +32,7 @@ echo json_encode($data, JSON_HEX_APOS);
 function autocompleteKeyword($keyword) {
     $results = array();
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $tableQuery = "SELECT city FROM cities WHERE city LIKE ? LIMIT 5;";
         
         $stmt = $pdo->prepare($tableQuery);
@@ -55,7 +58,7 @@ function autocompleteKeyword($keyword) {
 function searchHistoryKeywords($keyword){
     $results = array();
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $tableQuery = "SELECT keyword FROM history WHERE keyword LIKE ? AND "
                 . "username = ? ORDER BY datesearched DESC "
                 . "LIMIT 5;";
@@ -81,7 +84,7 @@ function searchHistoryKeywords($keyword){
  */
 function countHistory(){
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', "homestead", "secret");
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $tableQuery = "SELECT COUNT(keyword) FROM history WHERE username = ?;";
         $stmt = $pdo->prepare($tableQuery);
         

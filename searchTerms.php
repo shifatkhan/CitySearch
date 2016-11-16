@@ -1,11 +1,12 @@
 <?php
-
 /**
  * This php file will be taking care of searching keywords through the database
  * for past search terms
  *
  * @author Shifat Khan
  */
+
+include ('databaseConstants.php');
 
 /**
  * Displays the search history keywords
@@ -15,7 +16,7 @@ function searchHistoryKeywords() {
     $user = $_SESSION['username'];
     echo '<p id="searchTitle">Search History</p>';
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $tableQuery = "SELECT keyword FROM history WHERE "
                 . "username = ? ORDER BY datesearched DESC "
                 . "LIMIT 5;";

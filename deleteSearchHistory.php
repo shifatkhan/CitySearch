@@ -5,6 +5,9 @@
  * 
  * @author Shifat Khan
  */
+
+include ('databaseConstants.php');
+
 session_start();
 // Check if the keyword textbox was set OR if there's a user logged in
 if (!isset($_SESSION['username'])) {
@@ -23,7 +26,7 @@ echo $status;
  */
 function deleteSearchTerms($user) {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = 'DELETE FROM history WHERE username = ?;';
         $stmt = $pdo->prepare($query);
 

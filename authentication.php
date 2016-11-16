@@ -8,6 +8,9 @@
  * 
  * @author Shifat Khan
  */
+
+include ('databaseConstants.php');
+
 // Check if the user attempted to login more than three times or not
 if (isset($_POST['login'])) {
     if (countLoginAttempts() < 3) {
@@ -32,7 +35,7 @@ function signin() {
     if (!empty($_POST['user']) AND ! empty($_POST['password'])) {
         try {
             // Search if user exists in the db
-            $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+            $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = 'SELECT * FROM users WHERE username = ?;';
             $stmt = $pdo->prepare($query);
@@ -87,7 +90,7 @@ function signin() {
  */
 function countLoginAttempts() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $pdo->setAttribute(PDO::FETCH_NUM);
         $query = "SELECT COUNT(*) FROM loginAttempts WHERE (lastlogin > NOW()"
                 . " - INTERVAL 5 MINUTE) AND lastipaddress = ?;";
@@ -117,7 +120,7 @@ function countLoginAttempts() {
  */
 function storeLoginAttempt() {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = "INSERT INTO loginAttempts(lastipaddress, lastlogin)
           VALUES(?, CURRENT_TIMESTAMP);";
         $stmt = $pdo->prepare($query);
@@ -138,7 +141,7 @@ function storeLoginAttempt() {
  */
 function storeSessionInfo($userLoggedIn) {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = 'UPDATE users SET lastlogin=CURRENT_TIMESTAMP, lastipaddress=? '
                 . 'WHERE username=?;';
         $stmt = $pdo->prepare($query);
@@ -158,7 +161,7 @@ function storeSessionInfo($userLoggedIn) {
  */
 function resetLoginAttempts(){
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+        $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
         $query = 'DELETE FROM loginAttempts WHERE lastipaddress = ?;';
         $stmt = $pdo->prepare($query);
 

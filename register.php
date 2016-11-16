@@ -8,11 +8,15 @@
  * 
  * @author Shifat Khan
  */
+
+include ('databaseConstants.php');
+
+// The error number for when MYSQL finds a duplicate key.
 define("MYSQL_CODE_DUPLICATE_KEY", 1062);
 register();
 
 /**
- * User input validation and inputing data to database
+ * User input validation and inputing data to database.
  */
 function register() {
     session_start();
@@ -35,7 +39,7 @@ function register() {
         if ($cpassword === $password) {
             try {
                 // Store user into database
-                $pdo = new PDO('mysql:host=localhost;dbname=homestead', 'homestead', 'secret');
+                $pdo = new PDO('mysql:host='.HOST.';dbname='.DB_NAME, USER, PASSWORD);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $query = 'INSERT INTO users(username, hashpass) VALUES(?, ?);';
                 $stmt = $pdo->prepare($query);
