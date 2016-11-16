@@ -13,12 +13,15 @@ if (!isset($_GET['keyword'])) {
 
 $keyword = $_GET['keyword'];
 
+/*
+$data = array();
 if(countHistory() > 0){
     $data = searchHistoryKeywords();
     array_push($data, autocompleteKeyword($keyword));
 }else{
-    // TODO
-}
+    $data = autocompleteKeyword($keyword);
+}*/
+$data = autocompleteKeyword($keyword);
 
 // To facilitate the output, we return the array as json_encode
 echo json_encode($data, JSON_HEX_APOS);
@@ -89,6 +92,7 @@ function countHistory(){
         
         $stmt->bindValue(1, $_SESSION['username']);
         
+        // Check if there's past history
         if ($row = $stmt->fetch()) {
             return $row[0];
         }else {

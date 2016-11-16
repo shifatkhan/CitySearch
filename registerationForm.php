@@ -5,6 +5,17 @@ create the user's account.
 
 @author Shifat Khan
 -->
+
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+    if ($_SESSION['username']) {
+        //redirect to search form page to secure login page. 
+        header("Location: searchForm.php");
+        exit;
+    }
+}
+?>
 <html>
     <head>
         <meta charset="UTF-8">

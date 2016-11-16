@@ -19,7 +19,7 @@ if (!$_SESSION['username']) {
         <title>City Search</title>
         <link rel="stylesheet" type="text/css" href="myCss.css"/>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="myJavascript.js"></script>
     </head>
     <body>
@@ -46,8 +46,8 @@ if (!$_SESSION['username']) {
                 <label>Keyword:</label>
                 <input id="keyword" type="text" name="keyword" placeholder="Search"
                        list="datalist"/>
-                <input id="submit" type="submit" name="search" value="Submit"/>
-                <input id="delete" type="submit" name="delete" value="Delete history"/>
+                <input id="submitBtn" type="submit" name="search" value="Submit"/>
+                <input id="deleteBtn" type="submit" name="delete" value="Delete history"/>
                 <p class="alert" style="color: white"></p>
             </form>
             <?php

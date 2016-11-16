@@ -15,6 +15,9 @@ register();
  * User input validation and inputing data to database
  */
 function register() {
+    session_start();
+    session_regenerate_id();
+    
     // Check if the fields aren't empty
     if (!empty($_POST['user']) AND ! empty($_POST['password'])
             AND ! empty($_POST['cpassword'])) {
@@ -27,7 +30,7 @@ function register() {
                 $stmt = $pdo->prepare($query);
 
                 $stmt->bindParam(1, $_POST['user']);
-                
+
                 $options = [
                     'cost' => 10,
                 ];
@@ -37,8 +40,11 @@ function register() {
 
                 $stmt->execute();
 
-                // Return value indicating user was created
-                header("location:index.php?register=4");
+                // Create session id for the user logged in
+                $_SESSION['username'] = $_POST['user'];
+
+                // Redirect to the search form
+                header("location:searchForm.php");
             } catch (PDOException $pdoe) {
                 if ($pdoe->errorInfo[1] == MYSQL_CODE_DUPLICATE_KEY) {
                     // Return value indicating username already taken
