@@ -6,6 +6,6 @@
  */
 
 const HOST = 'korra.dawsoncollege.qc.ca';
-const DB_NAME = 'cs1435220';
+const DB_NAME = 'CS1435220';
 const USER = 'CS1435220';
 const PASSWORD = 'utallick';

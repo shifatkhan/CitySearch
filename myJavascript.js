@@ -82,18 +82,6 @@ $(document).ready(function () {
         });
     });
 
-    // Make the alert text disappear when not in focus
-    $("#keyword").blur(function () {
-        $(".alert").fadeOut(500);
-    });
-
-    // Make it so the list fades away when not in focus and appear when it is
-    $("#keyword").blur(function () {
-        $("#results").fadeOut(500);
-    }).focus(function () {
-        $("#results").show();
-    });
-
     // Add click listener for the history search terms items
     $('.search').click(function () {
         var text = $(this).html();
@@ -107,6 +95,18 @@ $(document).ready(function () {
                     $("<p class=\"alert\" style=\"color: white\">" + data + "</p>")
                             .insertBefore("#results");
                 });
+    });
+    
+    // Make the alert text disappear when not in focus
+    $("#keyword").blur(function () {
+        $(".alert").fadeOut(500);
+    });
+
+    // Make it so the list fades away when not in focus and appear when it is
+    $("#keyword").blur(function () {
+        $("#results").fadeOut(500);
+    }).focus(function () {
+        $("#results").show();
     });
 
 });

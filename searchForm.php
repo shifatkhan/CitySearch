@@ -61,7 +61,7 @@ if (!$_SESSION['username']) {
             <div id="results"></div>
         </div>
         <?php
-        include_once('searchTerms.php');
+        include('searchTerms.php');
 
         searchHistoryKeywords();
         ?>
